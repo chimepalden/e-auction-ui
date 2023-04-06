@@ -9,8 +9,16 @@
   </div>
   <div class="main">
     <div class="welcome" *ngIf="!currentProduct">
-      <h4>Welcome!</h4>
-      <p>Click on the product to see details.</p>
+      <div class="navi">
+        <a routerLink=""><button>Back</button></a>
+      </div>
+      <div class="body">
+        <h4>Welcome!</h4>
+        <p>
+          Click on the product to see the details of the products that you are
+          selling.
+        </p>
+      </div>
     </div>
     <div class="product" *ngIf="currentProduct">
       <div class="product-details">

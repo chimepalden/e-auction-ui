@@ -23,7 +23,7 @@
 .left-navi li button {
   border: none;
   background-color: darkgrey;
-} 
+}
 .left-navi li button:focus {
   color: lightblue;
 }
@@ -35,7 +35,13 @@
   padding-left: 20px;
 }
 
+.main .navi {
+  padding-top: 10px;
+  padding-right: 10px;
+  display: flex;
+  justify-content: right;
+}
+
 .product-details label {
   margin-right: 10px;
 }
-
