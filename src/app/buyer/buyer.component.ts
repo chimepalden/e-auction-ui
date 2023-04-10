@@ -28,7 +28,7 @@ export class BuyerComponent implements OnInit {
     this.isUserAuthenticated = this.authService.getIsAuth();
     if (this.isUserAuthenticated) {
       this.userId = this.authService.getUserId();
-      this.buyerService.getBuyerDetail(this.userId).subscribe( res => {
+      this.buyerService.getBuyerDetail(this.userId).subscribe((res) => {
         this.buyerProductList = (res as any).productList;
         this.buyerBidList = (res as any).bidList;
       });
@@ -39,8 +39,11 @@ export class BuyerComponent implements OnInit {
   }
 
   showProductDetail(product: ProductModel) {
-    for ( let bid of this.buyerBidList){
-      if(bid.productId === product.productId && bid.bidder.userId === this.userId){
+    for (let bid of this.buyerBidList) {
+      if (
+        bid.productId === product.productId &&
+        bid.bidder.userId === this.userId
+      ) {
         this.productBid = bid;
         break;
       }
@@ -48,4 +51,9 @@ export class BuyerComponent implements OnInit {
     this.currentProduct = product;
   }
 
+  toBuyerHomePage() {
+    if (this.currentProduct) {
+      this.currentProduct = undefined;
+    }
+  }
 }
