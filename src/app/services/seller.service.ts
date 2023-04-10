@@ -18,7 +18,6 @@ export class SellerService {
   // }
 
   getProductBidsDetailList(bids: string[]): Observable<BidModel[]> {
-    console.log(bids);
     let myHeaders = new HttpHeaders({ myHeader: bids });
     return this.http.get<BidModel[]>('http://localhost:3002/seller', {
       headers: myHeaders,

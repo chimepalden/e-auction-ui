@@ -38,7 +38,7 @@ export class SellerComponent implements OnInit {
 
   showProductDetail(product: ProductModel) {
     this.productBidsDetailList = [];
-    if (product.bids) {
+    if (product.bids && product.bids.length !== 0) {
       this.sellerService
         .getProductBidsDetailList(product.bids)
         .subscribe((res) => (this.productBidsDetailList = res as any));

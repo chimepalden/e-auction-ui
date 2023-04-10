@@ -49,7 +49,10 @@
       <hr />
       <div class="bids">
         <h4>Bids</h4>
-        <table *ngIf="productBidsDetailList" class="bids-table">
+        <div *ngIf="productBidsDetailList.length === 0" class="no-bid-message">
+          <p>No Bids</p>
+        </div>
+        <table *ngIf="productBidsDetailList.length > 0" class="bids-table">
           <tr>
             <th>Bid Amount</th>
             <th>Name</th>
