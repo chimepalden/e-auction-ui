@@ -3,17 +3,20 @@
     <h4>Products</h4>
     <ul>
       <li class="product" *ngFor="let product of sellerProductList">
-        <button (click)="showProductDetail(product)">{{ product.name }}</button>
+        <button (click)="showProductDetail(product)">
+          {{ product.name }}
+        </button>
       </li>
     </ul>
   </div>
   <div class="main">
     <div class="welcome" *ngIf="!currentProduct">
       <div class="navi">
+        <button id="add" (click)="openDialog($event)">Add Product</button>
         <a routerLink=""><button>Back</button></a>
       </div>
       <div class="body">
-        <h4>Welcome!</h4>
+        <h4>Seller Home!</h4>
         <p>
           Click on the product to see the details of the products that you are
           selling.
@@ -22,6 +25,7 @@
     </div>
     <div class="product" *ngIf="currentProduct">
       <div class="navi">
+        <button id="edit" (click)="openDialog($event)">Edit Product</button>
         <button (click)="toSellerHomePage()">Back</button>
       </div>
       <div class="product-details">

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { retry, Observable } from 'rxjs';
 import { BidModel } from '../models/bidModel';
+import { ProductModel } from '../models/productModel';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +23,20 @@ export class SellerService {
     return this.http.get<BidModel[]>('http://localhost:3002/seller', {
       headers: myHeaders,
     });
+  }
+
+  addProduct(product: ProductModel): Observable<ProductModel> {
+    return this.http.post<ProductModel>(
+      'http://localhost:3002/seller',
+      product
+    );
+  }
+
+  editProduct(product: ProductModel): Observable<ProductModel> {
+    console.log(product);
+    return this.http.patch<ProductModel>(
+      'http://localhost:3002/seller',
+      product
+    );
   }
 }

@@ -1,0 +1,31 @@
+<h3 mat-dialog-title>{{ modalTitle }}</h3>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Product Name</mat-label>
+    <input matInput [(ngModel)]="productInfo!.name" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="productInfo!.description" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Detial</mat-label>
+    <input matInput [(ngModel)]="productInfo!.detailDescription" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Category</mat-label>
+    <input matInput [(ngModel)]="productInfo!.category" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Starting Price</mat-label>
+    <input matInput [(ngModel)]="productInfo!.startingPrice" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Bid End Date</mat-label>
+    <input matInput [(ngModel)]="productInfo!.bidEndDate" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="action">
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-button (click)="save()">Save</button>
+</div>

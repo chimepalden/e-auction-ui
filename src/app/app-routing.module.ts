@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { BuyerComponent } from './buyer/buyer.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -10,7 +11,7 @@ const routes: Routes = [
   { path: 'seller', component: SellerComponent },
   { path: 'buyer', component: BuyerComponent },
   { path: 'login', component: LoginComponent },
-  // { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: 'home', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

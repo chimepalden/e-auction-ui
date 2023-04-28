@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
 import { BidModel } from '../models/bidModel';
 import { ProductModel } from '../models/productModel';
-import { UserModel } from '../models/userModel';
 import { AuthService } from '../services/auth.service';
 import { SellerService } from '../services/seller.service';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-seller',
   templateUrl: './seller.component.html',
   styleUrls: ['./seller.component.css'],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SellerComponent implements OnInit {
   isUserAuthenticated = false;
@@ -17,10 +20,12 @@ export class SellerComponent implements OnInit {
   sellerProductList: ProductModel[] = [];
   productBidsDetailList: BidModel[] = [];
   currentProduct: any;
+  dialogProductInfo: any;
   constructor(
     private authService: AuthService,
     private router: Router,
-    private sellerService: SellerService
+    private sellerService: SellerService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -28,12 +33,55 @@ export class SellerComponent implements OnInit {
     if (this.isUserAuthenticated) {
       this.userId = this.authService.getUserId();
       this.sellerService.getSellerProducts(this.userId).subscribe((res) => {
-        this.sellerProductList = res as any;
+        this.sellerProductList = res as ProductModel[];
       });
     } else {
       window.alert('Please login to continue');
       this.router.navigate(['/login']);
     }
+  }
+
+  openDialog(event: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.position = {
+      top: '150px',
+    };
+
+    const id = event.currentTarget.id;
+    if (id && id === 'add') {
+      dialogConfig.data = {
+        title: 'Add Product',
+      };
+    } else if (id && id === 'edit') {
+      dialogConfig.data = {
+        title: 'Edit Product',
+        productInfo: this.currentProduct,
+      };
+    }
+
+    const dialogRef = this.dialog.open(ModalComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((data) => {
+      data.sellerId = this.userId;
+      this.dialogProductInfo = data;
+      console.log(data);
+      if (id && id === 'add') {
+        this.sellerService
+          .addProduct(this.dialogProductInfo)
+          .subscribe((res) => {
+            this.sellerProductList.push(res as any);
+          });
+      } else if (id && id === 'edit') {
+        // converting type(number) to match backend type(number string)
+        this.dialogProductInfo.startingPrice =
+          this.dialogProductInfo.startingPrice.toString();
+        this.sellerService
+          .editProduct(this.dialogProductInfo)
+          .subscribe((res) => console.log(res));
+      }
+    });
   }
 
   showProductDetail(product: ProductModel) {
