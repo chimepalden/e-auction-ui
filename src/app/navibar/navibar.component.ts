@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class NavibarComponent implements OnInit, OnDestroy {
   isUserAuthenticated = false;
+  userName: string = '';
   private authListenerSubs: Subscription = new Subscription();
 
   constructor(private authService: AuthService) {}
@@ -18,6 +19,7 @@ export class NavibarComponent implements OnInit, OnDestroy {
       .getAuthStatusListener()
       .subscribe((isAuthenticated) => {
         this.isUserAuthenticated = isAuthenticated;
+        this.userName = this.authService.getUserName();
       });
   }
 

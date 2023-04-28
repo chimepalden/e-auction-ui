@@ -16,8 +16,10 @@
   text-decoration: none;
 }
 .links {
-  margin-right: 5px;
+  display: flex;
+  justify-content: space-around;
 }
 li {
   list-style-type: none;
+  margin-right: 5px;
 }

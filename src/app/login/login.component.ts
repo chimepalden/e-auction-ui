@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
       password: form.value.password,
     };
     console.log(credentials);
-    form.reset();
     this.authService.login(credentials);
   }
 }
