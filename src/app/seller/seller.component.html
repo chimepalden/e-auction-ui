@@ -12,7 +12,6 @@
   <div class="main">
     <div class="welcome" *ngIf="!currentProduct">
       <div class="navi">
-        <button id="add" (click)="openDialog($event)">Add Product</button>
         <a routerLink=""><button>Back</button></a>
       </div>
       <div class="body">
@@ -22,10 +21,12 @@
           selling.
         </p>
       </div>
+      <div class="actions">
+        <button id="add" (click)="openDialog($event)">Add Product</button>
+      </div>
     </div>
     <div class="product" *ngIf="currentProduct">
       <div class="navi">
-        <button id="edit" (click)="openDialog($event)">Edit Product</button>
         <button (click)="toSellerHomePage()">Back</button>
       </div>
       <div class="product-details">
@@ -49,6 +50,10 @@
           <label for="detailDescription">Detail:</label
           ><span>{{ currentProduct.detailDescription }}</span>
         </div>
+      </div>
+      <div class="actions">
+        <button id="edit" (click)="openDialog($event)">Edit Product</button>
+        <button id="delete" (click)="deleteProduct()">Delete</button>
       </div>
       <hr />
       <div class="bids">

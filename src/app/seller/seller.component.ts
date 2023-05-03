@@ -99,4 +99,19 @@ export class SellerComponent implements OnInit {
       this.currentProduct = undefined;
     }
   }
+
+  deleteProduct() {
+    const response = confirm('Are you sure?');
+    if (response) {
+      this.sellerService.deleteProduct(this.currentProduct).subscribe((res) => {
+        const index = this.sellerProductList.indexOf(this.currentProduct);
+        if (index > -1) {
+          this.sellerProductList.splice(index, 1);
+          this.showProductDetail(this.sellerProductList[0]);
+        } else {
+          alert('Something went wrong. Refresh your page.');
+        }
+      });
+    }
+  }
 }

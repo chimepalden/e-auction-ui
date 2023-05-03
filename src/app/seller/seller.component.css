@@ -39,9 +39,20 @@
   padding-top: 10px;
   padding-right: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
+.main .actions {
+  padding-top: 10px;
+  padding-right: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.main .actions #delete {
+  background-color: rgb(180, 20, 20);
+  margin-left: 5px;
+}
 .product-details label {
   margin-right: 10px;
 }

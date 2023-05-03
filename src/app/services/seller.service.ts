@@ -39,4 +39,11 @@ export class SellerService {
       product
     );
   }
+
+  deleteProduct(product: ProductModel): Observable<ProductModel> {
+    console.log(product);
+    return this.http.delete<ProductModel>(
+      `http://localhost:3002/seller/${product.productId}`
+    );
+  }
 }
