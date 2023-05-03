@@ -9,8 +9,9 @@ import { Router } from '@angular/router';
 export class AuthService {
   private access_token = null;
   private user_id: string = '';
-  private authStatusListener = new Subject<boolean>();
   private isAuthenticated = false;
+  private authStatusListener = new Subject<boolean>();
+  private userFirstName: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -20,6 +21,10 @@ export class AuthService {
 
   getUserId() {
     return this.user_id;
+  }
+
+  getUserName() {
+    return this.userFirstName;
   }
 
   getIsAuth() {
@@ -38,6 +43,7 @@ export class AuthService {
       .pipe(retry(3), catchError(this.handleError))
       .subscribe((response) => {
         this.user_id = (response as any).user_id;
+        this.userFirstName = (response as any).user_fName;
         const token = (response as any).access_token;
         if (token) {
           this.access_token = token;
