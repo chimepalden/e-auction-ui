@@ -63,24 +63,26 @@ export class SellerComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ModalComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((data) => {
-      data.sellerId = this.userId;
-      this.dialogProductInfo = data;
-      console.log(data);
-      if (id && id === 'add') {
-        this.sellerService
-          .addProduct(this.dialogProductInfo)
-          .subscribe((res) => {
-            this.sellerProductList.push(res as any);
-          });
-      } else if (id && id === 'edit') {
-        // converting type(number) to match backend type(number string)
-        this.dialogProductInfo.startingPrice =
-          this.dialogProductInfo.startingPrice.toString();
-        this.sellerService
-          .editProduct(this.dialogProductInfo)
-          .subscribe((res) => console.log(res));
-      }
+    dialogRef.afterClosed().subscribe((modalData) => {
+      if (modalData && modalData !== undefined) {
+        modalData.sellerId = this.userId;
+        this.dialogProductInfo = modalData;
+
+        if (id && id === 'add') {
+          this.sellerService
+            .addProduct(this.dialogProductInfo)
+            .subscribe((res) => {
+              this.sellerProductList.push(res as any);
+            });
+        } else if (id && id === 'edit') {
+          // converting type(number) to match backend type(number string)
+          this.dialogProductInfo.startingPrice =
+            this.dialogProductInfo.startingPrice.toString();
+          this.sellerService
+            .editProduct(this.dialogProductInfo)
+            .subscribe((res) => console.log(res));
+        }
+      } else console.log('action cancelled');
     });
   }
 
