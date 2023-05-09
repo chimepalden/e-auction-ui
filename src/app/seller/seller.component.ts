@@ -15,12 +15,12 @@ import { ModalComponent } from '../modal/modal.component';
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SellerComponent implements OnInit {
-  isUserAuthenticated = false;
   userId: string = '';
   sellerProductList: ProductModel[] = [];
   productBidsDetailList: BidModel[] = [];
   currentProduct: any;
   dialogProductInfo: any;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -29,12 +29,15 @@ export class SellerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isUserAuthenticated = this.authService.getIsAuth();
-    if (this.isUserAuthenticated) {
-      this.userId = this.authService.getUserId();
-      this.sellerService.getSellerProducts(this.userId).subscribe((res) => {
-        this.sellerProductList = res as ProductModel[];
-      });
+    if (this.authService.getIsAuth()) {
+      console.log(this.sellerService.getVisitedStatus());
+      if (!this.sellerService.getVisitedStatus()) {
+        this.userId = this.authService.getUserId();
+        this.sellerService.getSellerProducts(this.userId);
+      }
+      this.sellerService
+        .getProductList()
+        .subscribe((res) => (this.sellerProductList = res));
     } else {
       window.alert('Please login to continue');
       this.router.navigate(['/login']);
