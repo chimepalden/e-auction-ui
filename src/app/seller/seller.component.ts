@@ -31,8 +31,8 @@ export class SellerComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.getIsAuth()) {
       console.log(this.sellerService.getVisitedStatus());
+      this.userId = this.authService.getUserId();
       if (!this.sellerService.getVisitedStatus()) {
-        this.userId = this.authService.getUserId();
         this.sellerService.getSellerProducts(this.userId);
       }
       this.sellerService
