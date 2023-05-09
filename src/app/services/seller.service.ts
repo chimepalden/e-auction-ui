@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { retry, Observable } from 'rxjs';
+import { retry, Observable, Subject, BehaviorSubject } from 'rxjs';
 import { BidModel } from '../models/bidModel';
 import { ProductModel } from '../models/productModel';
 
@@ -8,10 +8,26 @@ import { ProductModel } from '../models/productModel';
   providedIn: 'root',
 })
 export class SellerService {
+  private visitedAsSeller = new BehaviorSubject<boolean>(false);
+  private productList = new BehaviorSubject<ProductModel[]>([]);
+
   constructor(private http: HttpClient) {}
 
+  getVisitedStatus() {
+    return this.visitedAsSeller.value;
+  }
+
+  getProductList() {
+    return this.productList.asObservable();
+  }
+
   getSellerProducts(id: string) {
-    return this.http.get(`http://localhost:3002/seller/${id}`);
+    this.http
+      .get<ProductModel[]>(`http://localhost:3002/seller/${id}`)
+      .subscribe((res) => {
+        this.productList.next(res as ProductModel[]);
+        this.visitedAsSeller.next(true);
+      });
   }
 
   // getAllUsers() {
