@@ -28,8 +28,8 @@ export class BuyerComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.getIsAuth()) {
       console.log(this.buyerService.getVisitedStatus());
+      this.userId = this.authService.getUserId();
       if (!this.buyerService.getVisitedStatus()) {
-        this.userId = this.authService.getUserId();
         this.buyerService
           .getBuyerDetail(this.userId)
           .subscribe((res) => (this.buyerProductList = res));
